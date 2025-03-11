@@ -101,8 +101,10 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+      HAL_GPIO_WritePin(GPIOD, SINAN_Pin|LED2_Pin|LED3_Pin|LED4_Pin, 1);
       HAL_Delay(1000); // Application'da 1000ms aralıklarla yanıp sönecek
+      HAL_GPIO_WritePin(GPIOD, SINAN_Pin|LED2_Pin|LED3_Pin|LED4_Pin, 0);
+      HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
@@ -197,14 +199,21 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, SINAN_Pin|LED2_Pin|LED3_Pin|LED4_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : LED1_Pin */
-  GPIO_InitStruct.Pin = LED1_Pin;
+  /*Configure GPIO pin : SINAN_Pin */
+  GPIO_InitStruct.Pin = SINAN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
-  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(SINAN_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LED2_Pin LED3_Pin LED4_Pin */
+  GPIO_InitStruct.Pin = LED2_Pin|LED3_Pin|LED4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
